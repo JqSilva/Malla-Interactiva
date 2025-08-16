@@ -1,0 +1,65 @@
+---
+
+---
+<header class="flex justify-between items-center mt-10 bg-white">
+  <!-- Izquierda -->
+  <div class="text-left">
+    <p class="text-lg font-semibold text-gray-800">CARRERA DE</p>
+    <p class="text-2xl font-bold text-gray-900">INGENIERIA CIVIL INFORMATICA</p>
+  </div>
+
+  <!-- Centro -->
+  <div class="text-center absolute left-1/2 transform -translate-x-1/2">
+    <p class="text-3xl font-semibold text-gray-700">Malla Interactiva</p>
+  </div>
+
+  <!-- Derecha -->
+  <div>
+    <img src="/ruta/al/logo.png" alt="Logo UCM" class="h-12 object-contain" />
+  </div>
+
+  <!-- HEADER MÓVIL (oculto en pantallas medianas+) -->
+  <div class="md:hidden fixed top-0 left-0 w-full bg-[#101828] text-white px-4 py-3 flex items-center justify-between z-50">
+    <a href="#hero" class="flex items-center gap-2">
+      <span class="font-bold text-lg ml-8">Malla Interactiva UCM</span>
+    </a>
+    <button id="menu-toggle" class="text-white focus:outline-none z-50">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- MENÚ HAMBURGUESA (móvil) -->
+  <nav id="mobile-nav" class="fixed top-[64px] left-0 w-full bg-[#101828] text-white px-4 py-4 space-y-3 text-center z-40 opacity-0 scale-y-95 transform transition-all duration-300 ease-in-out pointer-events-none">
+
+    <a href="#hero" class="block hover:text-[#5372F0] transition">Carreras</a>
+    <a href="#contact" class="block hover:text-[#5372F0] transition">Contacto</a>
+  </nav>
+</header>
+
+<script is:inline>
+  const toggleBtn = document.getElementById("menu-toggle");
+  const mobileNav = document.getElementById("mobile-nav");
+  
+
+ toggleBtn?.addEventListener("click", () => {
+  const isOpen = !mobileNav.classList.contains("opacity-100");
+
+  if (isOpen) {
+    mobileNav.classList.remove("opacity-0", "scale-y-95", "pointer-events-none");
+    mobileNav.classList.add("opacity-100", "scale-y-100", "pointer-events-auto");
+  } else {
+    mobileNav.classList.remove("opacity-100", "scale-y-100", "pointer-events-auto");
+    mobileNav.classList.add("opacity-0", "scale-y-95", "pointer-events-none");
+  }
+});
+
+document.querySelectorAll("#mobile-nav a").forEach(link =>
+  link.addEventListener("click", () => {
+    mobileNav.classList.remove("opacity-100", "scale-y-100", "pointer-events-auto");
+    mobileNav.classList.add("opacity-0", "scale-y-95", "pointer-events-none");
+  })
+);
+</script>
+
