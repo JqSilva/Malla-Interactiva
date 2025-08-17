@@ -397,7 +397,7 @@ import defaultMallaData from '../data/INF.json';
   async function fetchMallaByCode(code) {
     // Ajusta la base según tu despliegue (ej.: GitHub Pages con base)
 
-    const url = `${import.meta.env.BASE_URL}mallas/${code}.json`;
+    const url = `https://jqsilva.github.io/Malla-Interactiva/mallas/${code}.json`;
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`No se pudo cargar ${url}`);
     const data = await res.json();
