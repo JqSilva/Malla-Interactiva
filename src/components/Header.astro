@@ -1,65 +1,154 @@
 ---
-
+/* Header responsive con selector de carrera + acciones a la derecha + menú hamburguesa */
 ---
-<header class="flex justify-between items-center mt-10 bg-white">
-  <!-- Izquierda -->
-  <div class="text-left">
-    <p class="text-lg font-semibold text-gray-800">CARRERA DE</p>
-    <p class="text-2xl font-bold text-gray-900">INGENIERIA CIVIL INFORMATICA</p>
-  </div>
+<header class="relative bg-white px-4 py-6 ">
+  <!-- Fila principal -->
+  <div class="flex items-center gap-3">
+    <!-- Columna izquierda: Selector -->
+    <div class="flex-1 min-w-0">
+      <label for="careerSelect" class="block text-sm font-semibold text-gray-700">
+        CARRERA DE
+      </label>
+      <select
+        id="careerSelect"
+        class="w-full max-w-[420px] truncate text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer bg-transparent focus:outline-none"
+        aria-label="Seleccionar carrera"
+      >
+        <option value="INF">INGENIERIA CIVIL INFORMATICA</option>
+        <option value="TO">TERAPIA OCUPACIONAL</option>
+      </select>
+    </div>
 
-  <!-- Centro -->
-  <div class="text-center absolute left-1/2 transform -translate-x-1/2">
-    <p class="text-3xl font-semibold text-gray-700">Malla Interactiva</p>
-  </div>
+    
 
-  <!-- Derecha -->
-  <div>
-    <img src="/ruta/al/logo.png" alt="Logo UCM" class="h-12 object-contain" />
-  </div>
-
-  <!-- HEADER MÓVIL (oculto en pantallas medianas+) -->
-  <div class="md:hidden fixed top-0 left-0 w-full bg-[#101828] text-white px-4 py-3 flex items-center justify-between z-50">
-    <a href="#hero" class="flex items-center gap-2">
-      <span class="font-bold text-lg ml-8">Malla Interactiva UCM</span>
-    </a>
-    <button id="menu-toggle" class="text-white focus:outline-none z-50">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Botón hamburguesa (solo móvil) -->
+    <button
+      id="menu-toggle"
+      class="md:hidden ml-auto inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      aria-label="Abrir menú"
+      aria-controls="actions"
+      aria-expanded="false"
+      type="button"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
+
+    <!-- Columna derecha (acciones) en escritorio -->
+    <div class="hidden md:flex md:flex-1 md:justify-end md:items-center md:gap-2">
+      <!-- Inputs ocultos -->
+      <input type="file" id="jsonFileInput" accept=".json" class="hidden" />
+      <input type="file" id="progressInput" accept=".json" class="hidden" />
+
+      <!-- Botones (mismo tamaño, mismo estilo) -->
+      <button id="loadJsonBtn"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#8361FE] text-white px-4 h-12 min-w-[4rem] max-w-[10rem] rounded-xl font-medium text-sm shadow-md hover:bg-[#6f4ae0] hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8361FE]/50 hover:-translate-y-0.5 active:translate-y-0">
+        <span aria-hidden>📂</span><span>Cargar Malla</span>
+      </button>
+
+      <button id="importProgressBtn"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#8361FE] text-white px-4 h-12 min-w-[4rem] max-w-[10rem] rounded-xl font-medium text-sm shadow-md hover:bg-[#6f4ae0] hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8361FE]/50 hover:-translate-y-0.5 active:translate-y-0">
+        <span aria-hidden>⬆️</span><span>Importar Progreso</span>
+      </button>
+
+      <button id="exportProgressBtn"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#8361FE] text-white px-4 h-12 min-w-[4rem] max-w-[10rem] rounded-xl font-medium text-sm shadow-md hover:bg-[#6f4ae0] hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8361FE]/50 hover:-translate-y-0.5 active:translate-y-0">
+        <span aria-hidden>⬇️</span><span>Exportar Progreso</span>
+      </button>
+
+      <button id="resetBtn"
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#8361FE] text-white px-4 h-12 min-w-[4rem] max-w-[10rem] rounded-xl font-medium text-sm shadow-md hover:bg-[#6f4ae0] hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8361FE]/50 hover:-translate-y-0.5 active:translate-y-0">
+        <span aria-hidden>♻️</span><span>Reiniciar</span>
+      </button>
+    </div>
   </div>
 
-  <!-- MENÚ HAMBURGUESA (móvil) -->
-  <nav id="mobile-nav" class="fixed top-[64px] left-0 w-full bg-[#101828] text-white px-4 py-4 space-y-3 text-center z-40 opacity-0 scale-y-95 transform transition-all duration-300 ease-in-out pointer-events-none">
+  <!-- Menú móvil desplegable (mismo set de acciones) -->
+  <div
+    id="actions"
+    class="md:hidden absolute left-0 right-0 top-full z-40 bg-white border-t shadow-md hidden"
+  >
+    <div class="p-4 space-y-4">
+      <!-- (Opcional) título visible en móvil -->
+      <p class="md:hidden text-xl font-semibold text-gray-700 text-center">Malla Interactiva</p>
 
-    <a href="#hero" class="block hover:text-[#5372F0] transition">Carreras</a>
-    <a href="#contact" class="block hover:text-[#5372F0] transition">Contacto</a>
-  </nav>
+      <!-- Inputs ocultos -->
+      <input type="file" id="jsonFileInput" accept=".json" class="hidden" />
+      <input type="file" id="progressInput" accept=".json" class="hidden" />
+
+      <!-- Acciones en stack -->
+      <div class="grid grid-cols-1 gap-2">
+        <button id="loadJsonBtn" class="w-full bg-[#8361FE] text-white px-4 py-2 font-semibold text-sm rounded-lg hover:bg-[#654BC4]">
+          Cargar Malla
+        </button>
+        <button id="importProgressBtn" class="w-full bg-[#8361FE] text-white px-4 py-2 font-semibold text-sm rounded-lg hover:bg-[#654BC4]">
+          Importar Progreso
+        </button>
+        <button id="exportProgressBtn" class="w-full bg-[#8361FE] text-white px-4 py-2 font-semibold text-sm rounded-lg hover:bg-[#654BC4]">
+          Exportar Progreso
+        </button>
+        <button id="resetBtn" class="w-full bg-[#8361FE] text-white px-4 py-2 font-semibold text-sm rounded-lg hover:bg-[#654BC4]">
+          Reiniciar
+        </button>
+      </div>
+    </div>
+  </div>
 </header>
 
 <script is:inline>
-  const toggleBtn = document.getElementById("menu-toggle");
-  const mobileNav = document.getElementById("mobile-nav");
-  
+  // ---------- Hamburguesa (toggle del menú móvil) ----------
+  const toggleBtn = document.getElementById('menu-toggle');
+  const actions = document.getElementById('actions');
 
- toggleBtn?.addEventListener("click", () => {
-  const isOpen = !mobileNav.classList.contains("opacity-100");
+  toggleBtn?.addEventListener('click', () => {
+    const isHidden = actions.classList.contains('hidden');
+    actions.classList.toggle('hidden', !isHidden);
+    toggleBtn.setAttribute('aria-expanded', String(isHidden));
+  });
 
-  if (isOpen) {
-    mobileNav.classList.remove("opacity-0", "scale-y-95", "pointer-events-none");
-    mobileNav.classList.add("opacity-100", "scale-y-100", "pointer-events-auto");
+  // Cierra el menú si se hace click fuera (en móvil)
+  document.addEventListener('click', (e) => {
+    if (!actions || !toggleBtn) return;
+    const clickInsideMenu = actions.contains(e.target);
+    const clickOnButton = toggleBtn.contains(e.target);
+    if (!clickInsideMenu && !clickOnButton && !actions.classList.contains('hidden')) {
+      actions.classList.add('hidden');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Cierra el menú cuando se cambia el tamaño a md+
+  window.addEventListener('resize', () => {
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      actions?.classList.add('hidden');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ---------- Selector de carrera (default + remember) ----------
+  const careerSelect = document.getElementById('careerSelect');
+  const LS_KEY = 'malla-career';
+
+  // Cargar última carrera elegida o INF por defecto
+  const saved = localStorage.getItem(LS_KEY);
+  if (saved && [...careerSelect.options].some(o => o.value === saved)) {
+    careerSelect.value = saved;
   } else {
-    mobileNav.classList.remove("opacity-100", "scale-y-100", "pointer-events-auto");
-    mobileNav.classList.add("opacity-0", "scale-y-95", "pointer-events-none");
+    careerSelect.value = 'INF';
   }
-});
 
-document.querySelectorAll("#mobile-nav a").forEach(link =>
-  link.addEventListener("click", () => {
-    mobileNav.classList.remove("opacity-100", "scale-y-100", "pointer-events-auto");
-    mobileNav.classList.add("opacity-0", "scale-y-95", "pointer-events-none");
-  })
-);
+  // Disparar carga inicial
+  window.addEventListener('DOMContentLoaded', () => {
+    const code = careerSelect.value || 'INF';
+    window.dispatchEvent(new CustomEvent('careerChange', { detail: { code } }));
+  });
+
+  // Disparar en cada cambio y guardar preferencia
+  careerSelect?.addEventListener('change', () => {
+    const code = careerSelect.value;
+    localStorage.setItem(LS_KEY, code);
+    window.dispatchEvent(new CustomEvent('careerChange', { detail: { code } }));
+  });
 </script>
-

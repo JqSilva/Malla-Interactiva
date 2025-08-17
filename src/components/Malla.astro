@@ -1,5 +1,5 @@
 ---
-/** Malla.astro (11 columnas fijas + scroll X + diagonal + fade al desbloquear) */
+/** Malla.astro (columnas dinámicas + scroll X + diagonal + fade al desbloquear) */
 import defaultMallaData from '../data/INF.json';
 ---
 
@@ -8,34 +8,19 @@ import defaultMallaData from '../data/INF.json';
   {JSON.stringify(defaultMallaData)}
 </script>
 
-<!-- Barra de acciones -->
-<div class="flex flex-wrap gap-2 items-center justify-center my-6">
-  <input type="file" id="jsonFileInput" accept=".json" class="hidden" />
-  <button id="loadJsonBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-medium">
-    Cargar Malla (.json)
-  </button>
-
-  <input type="file" id="progressInput" accept=".json" class="hidden" />
-  <button id="importProgressBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 font-medium">
-    Importar Progreso
-  </button>
-  <button id="exportProgressBtn" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 font-medium">
-    Exportar Progreso
-  </button>
-
-  <button id="resetBtn" class="bg-rose-600 text-white px-4 py-2 rounded-lg hover:bg-rose-700 font-medium">
-    Reiniciar Progreso
-  </button>
+<!-- Columna centro: Título (se centra en md+) -->
+<div class="mt-4 text-center">
+  <p class="text-2xl md:text-3xl font-semibold text-gray-700">Malla Interactiva</p>
 </div>
 
 <!-- Header de progreso -->
-<div id="progressHeader" class="max-w-[340px] md:max-w-[1440px] w-full mx-auto text-center mb-4">
+<div id="progressHeader" class="max-w-[340px] md:max-w-[1440px] w-full mx-auto text-center mb-4 mt-8">
   <p class="text-sm text-gray-600">
     <span id="progressCount" class="font-semibold">0</span>/<span id="progressTotal">0</span> ramos aprobados
   </p>
 </div>
 
-<!-- Contenedor con scroll horizontal en móvil, ancho fijo en xl -->
+<!-- Contenedor con scroll horizontal en móvil, ancho contenido centrado en xl -->
 <div class="w-full mx-auto xl:max-w-[1440px]">
   <div id="scrollArea" class="overflow-x-auto xl:overflow-visible -mx-4 px-4 pb-2">
     <div id="mallaContainer" class="py-2"></div>
@@ -69,6 +54,9 @@ import defaultMallaData from '../data/INF.json';
 
     /* Color del bloqueado (gris-300 Tailwind) para el pre-pintado */
     --locked-bg: #d1d5db;
+
+    /* Ancho base de columna (puedes ajustarlo globalmente si quieres) */
+    --col-w: 120px;
   }
 
   .ramo {
@@ -93,9 +81,8 @@ import defaultMallaData from '../data/INF.json';
   /* Scroll cómodo en iOS/Android */
   #scrollArea { -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
 
-  /* Grid SIEMPRE 11 columnas; el scroll X lo da el wrapper */
-  #mallaGrid { grid-template-columns: repeat(11, var(--col-w, 120px)); }
-  
+  /* ❗️IMPORTANTE: NO forzamos 11 columnas aquí.
+     El número de columnas se setea inline desde JS con style="grid-template-columns: repeat(n, var(--col-w))" */
 
   /* Scroll snap por columna (opcional) */
   #scrollArea { scroll-snap-type: x mandatory; }
@@ -196,7 +183,7 @@ import defaultMallaData from '../data/INF.json';
     return (categories && categories[cat]) ? categories[cat][0] : '#6B7280';
   }
 
-  // ====== Render (con fade al desbloquear) ======
+  // ====== Render (con columnas dinámicas + fade al desbloquear) ======
   function render(mallaData, progress, prevStateMap) {
     const container = document.getElementById('mallaContainer');
     const all = flattenMalla(mallaData);
@@ -219,9 +206,14 @@ import defaultMallaData from '../data/INF.json';
     document.getElementById('progressCount').textContent = String(approved.size);
 
     const semesters = Object.keys(grouped).sort((a,b) => Number(a) - Number(b));
+    const cols = semesters.length; // ← dinámico (11, 10, …)
 
     const grid = `
-      <div id="mallaGrid" class="grid gap-3 w-max">
+      <div
+        id="mallaGrid"
+        class="grid gap-3 w-max xl:w-fit xl:mx-auto"
+        style="grid-template-columns: repeat(${cols}, var(--col-w));"
+      >
         ${semesters.map(n => `
           <div class="bg-white rounded-lg p-0.5 scroll-snap-col">
             <h3 class="text-center font-bold text-white text-sm mb-3 bg-gray-700 py-3 rounded h-12 flex items-center justify-center">
@@ -325,7 +317,7 @@ import defaultMallaData from '../data/INF.json';
   let __prevState = null;
   __prevState = render(currentMalla, progress, __prevState);
 
-  // ====== Cargar nueva malla ======
+  // ====== Cargar nueva malla desde botones del Header (por ID) ======
   document.getElementById('loadJsonBtn')?.addEventListener('click', () => {
     document.getElementById('jsonFileInput').click();
   });
@@ -399,5 +391,35 @@ import defaultMallaData from '../data/INF.json';
     saveProgress(progress);
     const prev = __prevState;
     __prevState = render(currentMalla, progress, prev);
+  });
+
+  // ====== Cargar malla por código (desde Header) ======
+  async function fetchMallaByCode(code) {
+    // Ajusta la base según tu despliegue (ej.: GitHub Pages con base)
+    const url = `Malla-Interactiva/mallas/${code}.json`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`No se pudo cargar ${url}`);
+    const data = await res.json();
+    return data;
+  }
+
+  // Escucha el cambio de carrera desde el Header
+  window.addEventListener('careerChange', async (ev) => {
+    const code = ev?.detail?.code;
+    if (!code) return;
+    try {
+      const newData = await fetchMallaByCode(code);
+      currentMalla = newData;
+      const newAll = new Set(flattenMalla(currentMalla).map(c => c.sigla));
+      const old = loadProgress(currentMalla.name);
+      const base = (old && old.name === currentMalla.name) ? old.approved : [];
+      const filtered = base.filter(sig => newAll.has(sig));
+      progress = { version: 1, name: currentMalla.name, approved: filtered };
+      saveProgress(progress);
+      const prev = __prevState;
+      __prevState = render(currentMalla, progress, prev);
+    } catch (err) {
+      alert('Error al cambiar de carrera: ' + (err?.message || err));
+    }
   });
 </script>

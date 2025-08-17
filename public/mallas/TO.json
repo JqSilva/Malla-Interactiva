@@ -1,0 +1,98 @@
+{
+  "name": "TO",
+  "malla": {
+    "s1": [
+      ["Anatomía General","CB101",0,0,"FI",[],"A"],
+      ["Socioantropología","TECT101",0,0,"FI",[],"A"],
+      ["Psicología General y del Ciclo Vital","TECT102",0,0,"FI",[],"A"],
+      ["Biología Celular e Histología","CB102",0,0,"FI",[],"A"],
+      ["Fundamentos de la Terapia Ocupacional I","TECT103",0,0,"TO",[],"A"],
+      ["Electivo de Comunicación","UA200",0,0,"HUM",[],"A"]
+    ],
+    "s2": [
+      ["Anatomía Funcional y Biomecánica","TECT201",0,0,"FI",["CB101"],"A"],
+      ["Psicología Social","TECT202",0,0,"FI",["TECT102"],"A"],
+      ["Fisiología General","CB103",0,0,"FI",["CB102"],"A"],
+      ["Fundamentos de la Terapia Ocupacional II","TECT203",0,0,"TO",["TECT103"],"A"],
+      ["Integrado Clínico","TECT204",0,0,"TO",["TECT101","TECT102","TECT103"],"A"],
+      ["Electivo de desarrollo del pensamiento","UA100",0,0,"HUM",[],"A"]
+    ],
+    "s3": [
+      ["Anatomía Funcional y Biomecánica II","TECT301",0,0,"FI",["TECT201"],"A"],
+      ["Neurociencias Aplicada a la Terapia Ocupacional","TECT302",0,0,"FI",["TECT201","CB103"],"A"],
+      ["Patología General","TECT303",0,0,"FI",["CB103"],"A"],
+      ["Competencias Terapéuticas","TECT304",0,0,"TO",["TECT203"],"A"],
+      ["Políticas Públicas y Promoción de Salud","TECT305",0,0,"TO",["TECT203"],"A"],
+      ["Electivo de Comunicación","UA201",0,0,"HUM",[],"A"]
+    ],
+    "s4": [
+      ["Neurología","TECT401",0,0,"FI",["TECT302"],"A"],
+      ["Desarrollo Psicomotor","TECT402",0,0,"FI",["TECT102"],"A"],
+      ["Modelos de Intervención en Terapia Ocupacional I","TECT403",0,0,"TO",["TECT204","TECT301","TECT302"],"A"],
+      ["Recreación y Deporte Inclusivo","TECT404",0,0,"TO",["TECT301","TECT305"],"A"],
+      ["Integrado de Terapia Ocupacional Ciclo Inicial","TECT405",0,0,"TO",["TECT204","TECT304","TECT305"],"A"],
+      ["Electivo de Desarrollo Personal","UA300",0,0,"HUM",[],"A"]
+    ],
+    "s5": [
+      ["Traumatología y Reumatología","TECT501",0,0,"FI",["TECT301"],"A"],
+      ["Salud Ocupacional y Ergonomía","TECT502",0,0,"TO",["TECT301"],"A"],
+      ["Psicopatología del Adulto","TECT503",0,0,"FI",["TECT402"],"A"],
+      ["Modelos de Intervención de T.O II","TECT504",0,0,"TO",["TECT405"],"A"],
+      ["Ayudas Técnicas y Tecnologías de Apoyo I","TECT505",0,0,"TO",["TECT301","TECT401"],"A"],
+      ["Electivo de Ética","UA400",0,0,"HUM",[],"A"]
+    ],
+    "s6": [
+      ["Psicopatología Infanto Juvenil","TECT601",0,0,"FI",["TECT503"],"A"],
+      ["Gestión, Administración y formulación de Proyectos","TECT602",0,0,"TO",["TECT305"],"A"],
+      ["Ayudas Técnicas y Tecnologías de Apoyo II","TECT603",0,0,"TO",["TECT501","TECT504"],"A"],
+      ["Geriatría y Gerontología Aplicada a la T.O","TECT604",0,0,"TO",["TECT403","TECT405"],"A"],
+      ["Integrado de T.O I","TECT605",0,0,"TO",["TECT405","TECT503"],"A"],
+      ["Electivo de Responsabilidad Social","UA500",0,0,"HUM",[],"A"]
+    ],
+    "s7": [
+      ["Metodología de la Investigación y estadísticas Aplicada","TECT701",0,0,"FI",["TECT603"],"A"],
+      ["Intervención en Salud Física Infanto Juvenil","TECT702",0,0,"TO",["TECT603","TECT605"],"A"],
+      ["Intervención en Salud Mental Infanto Juvenil","TECT703",0,0,"TO",["TECT601","TECT605"],"A"],
+      ["Inclusión Sociolaboral","TECT704",0,0,"TO",["TECT305","TECT502"],"A"],
+      ["Intervención en Salud Comunitaria y Gestión Social","TECT705",0,0,"TO",["TECT504","TECT602"],"A"],
+      ["Integrado de Terapia Ocupacional II","TECT706",0,0,"TO",["TECT601","TECT605"],"A"]
+    ],
+    "s8": [
+      ["Seminario de Investigación","TECT801",0,0,"TO",["TECT701"],"A"],
+      ["Intervención en Terapia Ocupacional en Adulto Mayor","TECT802",0,0,"TO",["TECT604","TECT705"],"A"],
+      ["Intervención en Salud Física Adulto","TECT803",0,0,"TO",["TECT603","TECT704"],"A"],
+      ["Intervención en Salud Mental Adulto","TECT804",0,0,"TO",["TECT705","TECT706"],"A"],
+      ["Inclusión en Sistemas Educativos","TECT805",0,0,"TO",["TECT702","TECT703"],"A"],
+      ["Integrado de Terapia Ocupacional Ciclo Intermedio","TECT806",0,0,"TO",["TECT702","TECT706"],"A"]
+    ],
+    "s9": [
+      [
+        "Práctica Profesional I",
+        "TECT901",
+        0,
+        0,
+        "TO",
+        ["CB101","TECT101","TECT102","CB102","TECT103","UA200","TECT201","TECT202","CB103","TECT203","TECT204","UA100","TECT301","TECT302","TECT303","TECT304","TECT305","UA201","TECT401","TECT402","TECT403","TECT404","TECT405","UA300","TECT501","TECT502","TECT503","TECT504","TECT505","UA400","TECT601","TECT602","TECT603","TECT604","TECT605","UA500","TECT701","TECT702","TECT703","TECT704","TECT705","TECT706","TECT801","TECT802","TECT803","TECT804","TECT805","TECT806"],
+        "A"
+      ],
+      [
+        "Práctica Profesional II",
+        "TECT902",
+        0,
+        0,
+        "TO",
+        ["CB101","TECT101","TECT102","CB102","TECT103","UA200","TECT201","TECT202","CB103","TECT203","TECT204","UA100","TECT301","TECT302","TECT303","TECT304","TECT305","UA201","TECT401","TECT402","TECT403","TECT404","TECT405","UA300","TECT501","TECT502","TECT503","TECT504","TECT505","UA400","TECT601","TECT602","TECT603","TECT604","TECT605","UA500","TECT701","TECT702","TECT703","TECT704","TECT705","TECT706","TECT801","TECT802","TECT803","TECT804","TECT805","TECT806"],
+        "A"
+      ]
+    ],
+    "s10": [
+      ["Práctica Profesional III","TECT1001",0,0,"TO",["TECT901","TECT902"],"A"],
+      ["Práctica Profesional IV","TECT1002",0,0,"TO",["TECT901","TECT902"],"A"]
+    ]
+  },
+  "categories": {
+  "FI": ["#2E58A7","Fundamentos"],
+  "TO": ["#4CAF50","Terapia Ocupacional"],
+  "HUM": ["#FF9800","Humanístico"]
+}
+}
